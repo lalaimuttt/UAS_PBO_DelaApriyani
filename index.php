@@ -1,5 +1,5 @@
 <?php
-// index.php - Dashboard Manajemen Karyawan
+// index.php - Dashboard Manajemen Karyawan (Versi Cerah)
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -13,7 +13,6 @@ require_once 'classes/KaryawanMagang.php';
 $db = new Koneksi();
 $conn = $db->getConnection();
 
-// Ambil data dari masing-masing class menggunakan method getAllData()
 $daftarTetap = KaryawanTetap::getAllData($conn);
 $daftarKontrak = KaryawanKontrak::getAllData($conn);
 $daftarMagang = KaryawanMagang::getAllData($conn);
@@ -39,7 +38,7 @@ $db->closeConnection();
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
             padding: 20px;
-            background: #1a0a0a;
+            background: #f0f4f8;
             position: relative;
             overflow-x: hidden;
         }
@@ -54,12 +53,12 @@ $db->closeConnection();
             bottom: 0;
             font-size: 80px;
             font-weight: 900;
-            color: rgba(255, 255, 255, 0.03);
+            color: rgba(200, 180, 255, 0.06);
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
-            z-index: -1;
+            z-index: 0;
             pointer-events: none;
             letter-spacing: 15px;
             line-height: 1.5;
@@ -67,10 +66,9 @@ $db->closeConnection();
             white-space: pre-wrap;
             word-break: break-all;
             padding: 50px;
-            text-shadow: 0 0 50px rgba(255, 182, 193, 0.05);
         }
 
-        /* ===== BACKGROUND GRADASI PASTEL ===== */
+        /* ===== BACKGROUND GRADASI PASTEL CERAH ===== */
         body::after {
             content: '';
             position: fixed;
@@ -78,17 +76,17 @@ $db->closeConnection();
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(ellipse at 20% 50%, rgba(255, 182, 193, 0.10) 0%, transparent 50%),
-                        radial-gradient(ellipse at 80% 50%, rgba(144, 238, 144, 0.08) 0%, transparent 50%),
-                        radial-gradient(ellipse at 50% 80%, rgba(173, 216, 230, 0.08) 0%, transparent 50%);
-            z-index: -1;
+            background: radial-gradient(ellipse at 20% 30%, rgba(255, 182, 193, 0.25) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 70%, rgba(144, 238, 144, 0.20) 0%, transparent 50%),
+                        radial-gradient(ellipse at 50% 90%, rgba(173, 216, 230, 0.20) 0%, transparent 50%);
+            z-index: 0;
             pointer-events: none;
-            animation: glowPulse 10s ease-in-out infinite;
+            animation: glowPulse 12s ease-in-out infinite;
         }
 
         @keyframes glowPulse {
             0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
-            50% { transform: scale(1.2) rotate(5deg); opacity: 1; }
+            50% { transform: scale(1.1) rotate(3deg); opacity: 1; }
         }
 
         /* ===== CONTAINER ===== */
@@ -102,41 +100,42 @@ $db->closeConnection();
         /* ===== HEADER ===== */
         .header {
             text-align: center;
-            padding: 30px 20px;
+            padding: 35px 20px;
             margin-bottom: 40px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.70);
             border-radius: 20px;
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px rgba(100, 100, 150, 0.08);
         }
 
         .header h1 {
             font-size: 2.8rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #ffb6c1, #98d8c8, #87ceeb);
+            background: linear-gradient(135deg, #f8a4b8, #7ecfc0, #7fc9e8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: none;
             letter-spacing: 2px;
         }
 
         .header p {
-            color: rgba(255, 255, 255, 0.6);
+            color: #7a7a9a;
             font-size: 1.1rem;
-            margin-top: 10px;
+            margin-top: 8px;
             letter-spacing: 5px;
+            font-weight: 500;
         }
 
         .header .subtitle {
             display: inline-block;
             margin-top: 10px;
-            padding: 8px 25px;
-            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 25px;
+            background: rgba(200, 180, 255, 0.15);
             border-radius: 20px;
-            color: rgba(255, 255, 255, 0.4);
+            color: #8a7aaa;
             font-size: 0.85rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(200, 180, 255, 0.15);
         }
 
         /* ===== STATISTIK ===== */
@@ -149,47 +148,49 @@ $db->closeConnection();
 
         .stat-card {
             padding: 25px;
-            border-radius: 15px;
+            border-radius: 18px;
             text-align: center;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(100, 100, 150, 0.06);
         }
 
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 12px 40px rgba(100, 100, 150, 0.12);
         }
 
         .stat-card .number {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 700;
             display: block;
         }
 
         .stat-card .label {
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.5);
+            color: #8a8aaa;
             margin-top: 5px;
+            font-weight: 500;
         }
 
         .stat-card.tetap {
-            background: linear-gradient(135deg, rgba(152, 216, 200, 0.15), rgba(152, 216, 200, 0.05));
-            border-color: rgba(152, 216, 200, 0.2);
+            background: linear-gradient(135deg, rgba(126, 207, 192, 0.20), rgba(126, 207, 192, 0.08));
+            border-color: rgba(126, 207, 192, 0.30);
         }
-        .stat-card.tetap .number { color: #98d8c8; }
+        .stat-card.tetap .number { color: #5bb5a8; }
 
         .stat-card.kontrak {
-            background: linear-gradient(135deg, rgba(255, 182, 193, 0.15), rgba(255, 182, 193, 0.05));
-            border-color: rgba(255, 182, 193, 0.2);
+            background: linear-gradient(135deg, rgba(248, 164, 184, 0.20), rgba(248, 164, 184, 0.08));
+            border-color: rgba(248, 164, 184, 0.30);
         }
-        .stat-card.kontrak .number { color: #ffb6c1; }
+        .stat-card.kontrak .number { color: #e88a9e; }
 
         .stat-card.magang {
-            background: linear-gradient(135deg, rgba(135, 206, 235, 0.15), rgba(135, 206, 235, 0.05));
-            border-color: rgba(135, 206, 235, 0.2);
+            background: linear-gradient(135deg, rgba(127, 201, 232, 0.20), rgba(127, 201, 232, 0.08));
+            border-color: rgba(127, 201, 232, 0.30);
         }
-        .stat-card.magang .number { color: #87ceeb; }
+        .stat-card.magang .number { color: #5aa9c9; }
 
         /* ===== SECTION KATEGORI ===== */
         .section {
@@ -197,8 +198,9 @@ $db->closeConnection();
             padding: 25px;
             border-radius: 20px;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.40);
+            box-shadow: 0 4px 20px rgba(100, 100, 150, 0.04);
         }
 
         .section-header {
@@ -207,7 +209,7 @@ $db->closeConnection();
             gap: 15px;
             margin-bottom: 25px;
             padding-bottom: 15px;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 2px solid rgba(100, 100, 150, 0.08);
         }
 
         .section-header h2 {
@@ -223,14 +225,14 @@ $db->closeConnection();
             letter-spacing: 1px;
         }
 
-        .section-tetap .section-header h2 { color: #98d8c8; }
-        .section-tetap .badge { background: rgba(152, 216, 200, 0.2); color: #98d8c8; }
+        .section-tetap .section-header h2 { color: #5bb5a8; }
+        .section-tetap .badge { background: rgba(126, 207, 192, 0.20); color: #5bb5a8; }
 
-        .section-kontrak .section-header h2 { color: #ffb6c1; }
-        .section-kontrak .badge { background: rgba(255, 182, 193, 0.2); color: #ffb6c1; }
+        .section-kontrak .section-header h2 { color: #e88a9e; }
+        .section-kontrak .badge { background: rgba(248, 164, 184, 0.20); color: #e88a9e; }
 
-        .section-magang .section-header h2 { color: #87ceeb; }
-        .section-magang .badge { background: rgba(135, 206, 235, 0.2); color: #87ceeb; }
+        .section-magang .section-header h2 { color: #5aa9c9; }
+        .section-magang .badge { background: rgba(127, 201, 232, 0.20); color: #5aa9c9; }
 
         /* ===== GRID KARYAWAN ===== */
         .grid {
@@ -241,30 +243,31 @@ $db->closeConnection();
 
         /* ===== CARD KARYAWAN ===== */
         .card {
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.80);
+            border-radius: 16px;
             padding: 22px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             transition: all 0.3s ease;
             backdrop-filter: blur(5px);
+            box-shadow: 0 4px 16px rgba(100, 100, 150, 0.05);
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 12px 40px rgba(100, 100, 150, 0.10);
+            border-color: rgba(200, 180, 255, 0.2);
         }
 
         .card .nama {
             font-size: 1.2rem;
             font-weight: 600;
-            color: #fff;
+            color: #2a2a4a;
             margin-bottom: 12px;
         }
 
         .card .nama .id {
             font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.3);
+            color: #aaaac0;
             font-weight: 400;
             margin-left: 8px;
         }
@@ -282,77 +285,102 @@ $db->closeConnection();
         }
 
         .card .info-item .label {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.35);
+            font-size: 0.65rem;
+            color: #aaaac0;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-weight: 600;
         }
 
         .card .info-item .value {
             font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.85);
+            color: #3a3a5a;
             font-weight: 500;
         }
 
         .card .fasilitas {
             margin: 12px 0;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 14px;
+            background: rgba(200, 180, 255, 0.06);
             border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(200, 180, 255, 0.08);
         }
 
         .card .fasilitas .label {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.35);
+            font-size: 0.65rem;
+            color: #aaaac0;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-weight: 600;
             display: block;
             margin-bottom: 5px;
         }
 
         .card .fasilitas .value {
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
+            color: #4a4a6a;
         }
 
         .card .gaji {
             margin-top: 15px;
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-align: center;
             font-weight: 700;
             font-size: 1.3rem;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(200, 180, 255, 0.10);
         }
 
         .card .gaji .label {
             display: block;
-            font-size: 0.7rem;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: #aaaac0;
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 3px;
         }
 
-        /* Warna gaji per kategori */
+        /* Warna gaji per kategori - Lebih cerah */
         .card-tetap .gaji {
-            background: rgba(152, 216, 200, 0.10);
-            border-color: rgba(152, 216, 200, 0.15);
-            color: #98d8c8;
+            background: rgba(126, 207, 192, 0.12);
+            border-color: rgba(126, 207, 192, 0.20);
+            color: #3a9a8a;
         }
 
         .card-kontrak .gaji {
-            background: rgba(255, 182, 193, 0.10);
-            border-color: rgba(255, 182, 193, 0.15);
-            color: #ffb6c1;
+            background: rgba(248, 164, 184, 0.12);
+            border-color: rgba(248, 164, 184, 0.20);
+            color: #d47a8e;
         }
 
         .card-magang .gaji {
-            background: rgba(135, 206, 235, 0.10);
-            border-color: rgba(135, 206, 235, 0.15);
-            color: #87ceeb;
+            background: rgba(127, 201, 232, 0.12);
+            border-color: rgba(127, 201, 232, 0.20);
+            color: #3a8aaa;
+        }
+
+        .card .status-badge {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .status-tetap { background: rgba(126, 207, 192, 0.20); color: #3a9a8a; }
+        .status-kontrak { background: rgba(248, 164, 184, 0.20); color: #d47a8e; }
+        .status-magang { background: rgba(127, 201, 232, 0.20); color: #3a8aaa; }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 30px 0 10px;
+            color: #cacae0;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            border-top: 1px solid rgba(100, 100, 150, 0.06);
+            margin-top: 20px;
         }
 
         /* ===== RESPONSIVE ===== */
@@ -404,7 +432,7 @@ $db->closeConnection();
     <div class="container">
         <!-- ===== HEADER ===== -->
         <div class="header">
-            <h1>🎀 Dashboard Manajemen Karyawan 🎀</h1>
+            <h1>🌸 Dashboard Manajemen Karyawan 🎀</h1>
             <p>PT. DELA APRIYANI GROUP</p>
             <span class="subtitle">Slip Gaji &amp; Informasi Karyawan</span>
         </div>
@@ -426,7 +454,7 @@ $db->closeConnection();
         </div>
 
         <!-- ===== KARYAWAN TETAP ===== -->
-        <div class="section section-tetap section-tetap">
+        <div class="section section-tetap">
             <div class="section-header">
                 <h2>👔 Karyawan Tetap</h2>
                 <span class="badge"><?= count($daftarTetap) ?> orang</span>
@@ -454,7 +482,7 @@ $db->closeConnection();
                         </div>
                         <div class="info-item">
                             <span class="label">Status</span>
-                            <span class="value" style="color: #98d8c8;">Tetap</span>
+                            <span class="value"><span class="status-badge status-tetap">Tetap</span></span>
                         </div>
                     </div>
                     <div class="fasilitas">
@@ -501,7 +529,7 @@ $db->closeConnection();
                         </div>
                         <div class="info-item">
                             <span class="label">Status</span>
-                            <span class="value" style="color: #ffb6c1;">Kontrak</span>
+                            <span class="value"><span class="status-badge status-kontrak">Kontrak</span></span>
                         </div>
                     </div>
                     <div class="fasilitas">
@@ -548,7 +576,7 @@ $db->closeConnection();
                         </div>
                         <div class="info-item">
                             <span class="label">Status</span>
-                            <span class="value" style="color: #87ceeb;">Magang</span>
+                            <span class="value"><span class="status-badge status-magang">Magang</span></span>
                         </div>
                     </div>
                     <div class="fasilitas">
@@ -567,7 +595,7 @@ $db->closeConnection();
         </div>
 
         <!-- ===== FOOTER ===== -->
-        <div style="text-align: center; padding: 30px 0 10px; color: rgba(255,255,255,0.15); font-size: 0.8rem; letter-spacing: 3px; border-top: 1px solid rgba(255,255,255,0.03); margin-top: 20px;">
+        <div class="footer">
             © 2026 PT. DELA APRIYANI GROUP • Sistem Manajemen Karyawan
         </div>
     </div>
