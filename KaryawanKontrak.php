@@ -4,18 +4,15 @@
 require_once 'Karyawan.php';
 
 class KaryawanKontrak extends Karyawan {
-    // Properti tambahan khusus Karyawan Kontrak
     private $durasiKontrakBulan;
     private $agensiPenyalur;
 
-    // Constructor
     public function __construct($data) {
-        parent::__construct($data); // Panggil constructor parent
+        parent::__construct($data);
         $this->durasiKontrakBulan = $data['durasi_kontrak_bulan'] ?? 0;
         $this->agensiPenyalur = $data['agensi_penyalur'] ?? 'Tidak tersedia';
     }
 
-    // Getter untuk properti tambahan
     public function getDurasiKontrakBulan() {
         return $this->durasiKontrakBulan;
     }
@@ -24,13 +21,16 @@ class KaryawanKontrak extends Karyawan {
         return $this->agensiPenyalur;
     }
 
-    // Implementasi method abstract hitungGajiBersih()
-    // Kontrak: Gaji Bersih = gaji_dasar_per_hari * 22 hari (tanpa tunjangan)
+    // ✅ OVERRIDE: hariKerja × gajiDasar (murni)
     public function hitungGajiBersih() {
-        return $this->gaji_dasar_per_hari * 22; // 22 hari kerja
+        $tanggalMasuk = new DateTime($this->hari_kerja_masuk);
+        $sekarang = new DateTime();
+        $selisih = $tanggalMasuk->diff($sekarang);
+        $hariKerja = $selisih->days;
+        
+        return $hariKerja * $this->gaji_dasar_per_hari;
     }
 
-    // Implementasi method abstract tampilkanProfilKaryawan()
     public function tampilkanProfilKaryawan() {
         return [
             'id_karyawan' => $this->id_karyawan,
@@ -42,6 +42,18 @@ class KaryawanKontrak extends Karyawan {
             'durasi_kontrak_bulan' => $this->durasiKontrakBulan,
             'agensi_penyalur' => $this->agensiPenyalur
         ];
+    }
+
+    // ✅ SELECT * FROM + WHERE khusus karyawan kontrak
+    public static function getAllData($conn) {
+        $query = "SELECT * FROM tabel_karyawan WHERE jenis_karyawan = 'Kontrak'";
+        $result = $conn->query($query);
+        
+        $data = [];
+        while ($row = $result->fetch_assoc()) {
+            $data[] = new self($row);
+        }
+        return $data;
     }
 }
 ?>

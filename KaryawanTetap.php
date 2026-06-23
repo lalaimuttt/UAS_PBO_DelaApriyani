@@ -4,18 +4,15 @@
 require_once 'Karyawan.php';
 
 class KaryawanTetap extends Karyawan {
-    // Properti tambahan khusus Karyawan Tetap
     private $tunjanganKesehatan;
     private $opsiSahamId;
 
-    // Constructor
     public function __construct($data) {
-        parent::__construct($data); // Panggil constructor parent
+        parent::__construct($data);
         $this->tunjanganKesehatan = $data['tunjangan_kesehatan'] ?? 0;
         $this->opsiSahamId = $data['opsi_saham_id'] ?? 'Tidak tersedia';
     }
 
-    // Getter untuk properti tambahan
     public function getTunjanganKesehatan() {
         return $this->tunjanganKesehatan;
     }
@@ -24,14 +21,17 @@ class KaryawanTetap extends Karyawan {
         return $this->opsiSahamId;
     }
 
-    // Implementasi method abstract hitungGajiBersih()
-    // Tetap: Gaji Bersih = (gaji_dasar_per_hari * 22 hari) + tunjanganKesehatan
+    // ✅ OVERRIDE: (hariKerja × gajiDasar) + tunjanganKesehatan
     public function hitungGajiBersih() {
-        $gajiPokok = $this->gaji_dasar_per_hari * 22; // 22 hari kerja
+        $tanggalMasuk = new DateTime($this->hari_kerja_masuk);
+        $sekarang = new DateTime();
+        $selisih = $tanggalMasuk->diff($sekarang);
+        $hariKerja = $selisih->days;
+        
+        $gajiPokok = $hariKerja * $this->gaji_dasar_per_hari;
         return $gajiPokok + $this->tunjanganKesehatan;
     }
 
-    // Implementasi method abstract tampilkanProfilKaryawan()
     public function tampilkanProfilKaryawan() {
         return [
             'id_karyawan' => $this->id_karyawan,
@@ -43,6 +43,18 @@ class KaryawanTetap extends Karyawan {
             'tunjangan_kesehatan' => $this->tunjanganKesehatan,
             'opsi_saham_id' => $this->opsiSahamId
         ];
+    }
+
+    // ✅ SELECT * FROM + WHERE khusus karyawan tetap
+    public static function getAllData($conn) {
+        $query = "SELECT * FROM tabel_karyawan WHERE jenis_karyawan = 'Tetap'";
+        $result = $conn->query($query);
+        
+        $data = [];
+        while ($row = $result->fetch_assoc()) {
+            $data[] = new self($row);
+        }
+        return $data;
     }
 }
 ?>
